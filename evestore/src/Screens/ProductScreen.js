@@ -1,6 +1,6 @@
-import React from 'react';
+import React from './node_modules/react';
 import data from '../data';
-import { Link } from 'react-router-dom';
+import { Link } from './node_modules/react-router-dom';
 
 function ProductScreen(props) {
     console.log(props.match.params.id);
