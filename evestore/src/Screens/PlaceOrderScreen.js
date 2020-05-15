@@ -2,91 +2,131 @@ import React, { useEffect } from 'react';
 import { addToCart, removeFromCart } from '../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import CheckoutSteps from '../components/CheckoutSteps';
 
 function PlaceOrderScreen(props) {
 
     const cart = useSelector(state => state.cart);
-    const { cartItems } = cart;
+    const { cartItems, shipping, payment } = cart;
 
-    const dispatch = useDispatch();
-    const removeFromCartHandler = (productId) => {
-        dispatch(removeFromCart(productId));
+    if (!shipping.address) {
+        props.history.push("/shipping");
+    }else if (!payment.paymentMethod) {
+        props.location.push("payment");
     }
 
+    const itemsPrice = cartItems.reduce((a,c) => a + c.price *c.qty,0);
+    const shippingPrice = itemsPrice > 100 ? 0 :10;
+    const taxPrice = 0.15 * itemsPrice;
+    const totalPrice = itemsPrice + shippingPrice + taxPrice;
+
+    const PlaceOrderHandler = () => {
+
+    }
+
+    const dispatch = useDispatch();
+
     useEffect(() => {
-        if (productId) {
-            dispatch(addToCart(productId, qty));
-        }
+
     }, []);
 
     const checkoutHandler = () => {
         props.history.push("/signin?redirect=shipping");
     }
 
-    return <div className="cart">
-        <div className="cart-list">
-            <ul className="cart-list-container">
-                <li>
+    return <div>
+        <CheckoutSteps step1 step2 step3 step4 ></CheckoutSteps>
+        <div className="placeorder">
+            <div className="placeorder-info">
+                <div>
                     <h3>
-                        Shopping Cart
-                    </h3>
+                        Shipping
+                </h3>
                     <div>
-                        Price
+                        {cart.shipping.address}, {cart.shipping.city},
+                    {cart.shipping.postalCode}, {cart.shipping.country},
+                </div>
+                </div>
+                <ul className="cart-list-container">
+                    <li>
+                        <h3>
+                            Shopping Cart
+                    </h3>
+                        <div>
+                            Price
                     </div>
-                    {
-                        cartItems.length === 0 ?
-                            <div>
-                                Cart is empty
+                        {
+                            cartItems.length === 0 ?
+                                <div>
+                                    Cart is empty
                     </div>
-                            :
-                            cartItems.map(item =>
-                                <li>
-                                    <div className="cart-image">
-                                        <img src={item.image} alt="product" />
-                                    </div>
-
-                                    <div className="cart-name">
-                                        <div>
-                                            <Link to={"/product/" + item.product}>
-                                            {item.name}
-                                            </Link>
-                                            
+                                :
+                                cartItems.map(item =>
+                                    <li>
+                                        <div className="cart-image">
+                                            <img src={item.image} alt="product" />
                                         </div>
-                                        <div>
-                                            Qty:
-                                            <select value={item.qty} onChange={(e) => dispatch(addToCart(item.product,e.target.value))}>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                            </select>
-                                            <button type="button" className="button" onClick={() => removeFromCartHandler(item.product)}>
-                                                Delete
-                                            </button>
+
+                                        <div className="cart-name">
+                                            <div>
+                                                <Link to={"/product/" + item.product}>
+                                                    {item.name}
+                                                </Link>
+
+                                            </div>
+                                            <div>
+                                                Qty: {item.qty}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="cart-price">
-                                        Rp.{item.price}
-                                    </div>
-                                </li>
-                            )
+                                        <div className="cart-price">
+                                            Rp.{item.price}
+                                        </div>
+                                    </li>
+                                )}
+                    </li>
+                </ul>
+                <div>
+                    <h3>Payment</h3>
+                    <div>
+                        Payment Method : {cart.payment.paymentMethod}
+                    </div>
+                </div>
 
-                    }
-                </li>
-            </ul>
-        </div>
+            </div>
 
-        <div className="cart-action">
-            <h3>
-                Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)}items)
-                :
-            Rp.{cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
-            </h3>
-            <button onClick={checkoutHandler} className="button primary full-width" disabled={cartItems.length === 0}>
-                Proceed to Checkout
-            </button>
+            <div className="placeorder-action">
+                <ul>
+                    <li>
+                        <button className="button primary full-width" onClick={PlaceOrderHandler} >Place Order</button>
+                    </li>
+                    <li>
+                        <h3>Order Summary</h3>
+                    </li>
+                    <li>
+                        <div>Items</div>
+                        <div>Rp.{itemsPrice}</div>
+                    </li>
+                    <li>
+                        <div>Shipping</div>
+                        <div>Rp.{shippingPrice}</div>
+                    </li>
+                    <li>
+                        <div>Tax</div>
+                        <div>Rp.{taxPrice}</div>
+                    </li>
+                    <li>
+                        <div>Order Total</div>
+                        <div>Rp.{totalPrice}</div>
+                    </li>
+                </ul>
 
+
+            </div>
         </div>
     </div>
+
 }
 
 export default PlaceOrderScreen;
+
+
