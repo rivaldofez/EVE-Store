@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start" : "nodemon --watch evestore_backend --exec babel-node evestore_backend/server.js" 
+    "start": "nodemon --watch evestore_backend --exec babel-node evestore_backend/server.js"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,11 @@
   },
   "homepage": "https://github.com/rivaldofez/EVE-Store#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.14"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
