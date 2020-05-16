@@ -34,8 +34,10 @@ function App() {
           <div className="brand">
             <button onClick={openMenu}>
               &#9776;
-        </button>
-            <Link to="/" >amazona</Link>
+            </button>
+            <Link to="/" >
+              <img src='logo.png'></img>
+            </Link>
           </div>
           <div className="header-links">
             <a href="cart.html">Cart</a>
@@ -96,8 +98,8 @@ function App() {
 
         </main>
         <footer className="footer">
-          All right reserved.
-    </footer>
+          &copy; Kelompok 15 (Rivaldo Fernandes & Edi Kurniawan)
+        </footer>
       </div>
     </BrowserRouter>
   );
