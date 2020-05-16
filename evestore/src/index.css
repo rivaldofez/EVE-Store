@@ -302,6 +302,7 @@ a:hover {
   flex-wrap: wrap;
   margin: 1rem;
   align-items: flex-start;
+  justify-content: space-around;
 }
 
 .cart-list {
