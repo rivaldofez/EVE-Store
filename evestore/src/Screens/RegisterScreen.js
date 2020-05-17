@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { register } from '../actions/userActions';
 
 function RegisterScreen(props) {
@@ -9,13 +9,13 @@ function RegisterScreen(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rePassword, setRePassword] = useState('');
-    const userRegister = useSelector(state=>state.userRegister);
-    const {loading,userInfo, error} = userRegister;
+    const userRegister = useSelector(state => state.userRegister);
+    const { loading, userInfo, error } = userRegister;
     const dispatch = useDispatch();
-    const redirect = props.location.search?props.location.search.split("=")[1]:'/';
+    const redirect = props.location.search ? props.location.search.split("=")[1] : '/';
 
     useEffect(() => {
-        if(userInfo){
+        if (userInfo) {
             props.history.push(redirect);
         }
         return () => {
@@ -25,7 +25,7 @@ function RegisterScreen(props) {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(register(name,email,password));
+        dispatch(register(name, email, password));
     }
 
     return <div className="form">
@@ -53,13 +53,13 @@ function RegisterScreen(props) {
                     </input>
                 </li>
                 <li>
-                    <label htmlFor ="password">Password</label>
-                    <input type="password" id="password" name="password" onChange={(e)=>setPassword(e.target.value)}>
+                    <label htmlFor="password">Password</label>
+                    <input type="password" id="password" name="password" onChange={(e) => setPassword(e.target.value)}>
                     </input>
                 </li>
                 <li>
-                    <label htmlFor ="rePassword">Re-Enter Password</label>
-                    <input type="rePassword" id="rePassword" name="rePassword" onChange={(e)=>setRePassword(e.target.value)}>
+                    <label htmlFor="rePassword">Re-Enter Password</label>
+                    <input type="rePassword" id="rePassword" name="rePassword" onChange={(e) => setRePassword(e.target.value)}>
                     </input>
                 </li>
                 <li>
@@ -69,7 +69,7 @@ function RegisterScreen(props) {
                     Already have an account?
                     <Link to={redirect === "/" ? "signin" : "signin?redirect=" + redirect} className="button secondary text-center">Create your Eve-Store account</Link>
                 </li>
-            
+
             </ul>
         </form>
     </div>
