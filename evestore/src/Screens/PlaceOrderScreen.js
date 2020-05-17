@@ -96,7 +96,7 @@ function PlaceOrderScreen(props) {
           </ul>
         </div>
 
-      
+
       </div>
       <div className="placeorder-action">
         <ul>
