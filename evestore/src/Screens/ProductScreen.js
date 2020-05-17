@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { detailsProduct } from '../actions/productActions';
 
 function ProductScreen(props) {
@@ -16,7 +16,7 @@ function ProductScreen(props) {
     }, []);
 
     const handleAddToCart = () => {
-        props.history.push("/cart/" + props.match.params.id + "?qty=" +qty)
+        props.history.push("/cart/" + props.match.params.id + "?qty=" + qty)
     }
 
     return <div>
@@ -58,16 +58,16 @@ function ProductScreen(props) {
                                     {product.price}
                                 </li>
                                 <li>
-                                    Status : {product.countInStock>0? "In Stock" :"Out of Stock."}
+                                    Status : {product.countInStock > 0 ? "In Stock" : "Out of Stock."}
                                 </li>
                                 <li>
-                                    Qty : <select value = {qty} onChange={(e) => {setQty(e.target.value)}}>
-                                        {[...Array(product.countInStock).keys()].map(x=>
-                                            <option key={x+1} value={x+1}>{x+1}</option>)}
+                                    Qty : <select value={qty} onChange={(e) => { setQty(e.target.value) }}>
+                                        {[...Array(product.countInStock).keys()].map(x =>
+                                            <option key={x + 1} value={x + 1}>{x + 1}</option>)}
                                     </select>
                                 </li>
                                 <li>
-                                    {product.countInStock>0 && <button onClick={handleAddToCart} className="button">Add To Cart</button>
+                                    {product.countInStock > 0 && <button onClick={handleAddToCart} className="button">Add To Cart</button>
                                     }
                                 </li>
                             </ul>
