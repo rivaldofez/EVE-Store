@@ -5,27 +5,27 @@ import { Link } from 'react-router-dom';
 
 function CartScreen(props) {
 
-    const cart = useSelector(state => state.cart);
-    const { cartItems } = cart;
+  const cart = useSelector(state => state.cart);
+  const { cartItems } = cart;
 
-    const productId = props.match.params.id;
-    const qty = props.location.search ? Number(props.location.search.split("=")[1]) : 1;
-    const dispatch = useDispatch();
-    const removeFromCartHandler = (productId) => {
-        dispatch(removeFromCart(productId));
+  const productId = props.match.params.id;
+  const qty = props.location.search ? Number(props.location.search.split("=")[1]) : 1;
+  const dispatch = useDispatch();
+  const removeFromCartHandler = (productId) => {
+    dispatch(removeFromCart(productId));
+  }
+
+  useEffect(() => {
+    if (productId) {
+      dispatch(addToCart(productId, qty));
     }
+  }, []);
 
-    useEffect(() => {
-        if (productId) {
-            dispatch(addToCart(productId, qty));
-        }
-    }, []);
+  const checkoutHandler = () => {
+    props.history.push("/signin?redirect=shipping");
+  }
 
-    const checkoutHandler = () => {
-        props.history.push("/signin?redirect=shipping");
-    }
-
-    return <div className="cart">
+  return <div className="cart">
     <div className="cart-list">
       <ul className="cart-list-container">
         <li>
